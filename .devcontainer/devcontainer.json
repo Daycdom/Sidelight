@@ -1,9 +1,16 @@
 {
   "name": "Sidelight (Linux, cross-platform code only)",
   "image": "mcr.microsoft.com/devcontainers/python:3.12",
-  "postCreateCommand": "pip install --user uv && uv sync && uv run pre-commit install",
+  "containerEnv": {
+    // Keep the container's venv out of the workspace so it doesn't overwrite the WSL/Windows .venv.
+    "UV_PROJECT_ENVIRONMENT": "/home/vscode/.venvs/sidelight"
+  },
+  "postCreateCommand": "pip install --user uv && python -m uv sync && python -m uv run pre-commit install",
   "customizations": {
     "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/home/vscode/.venvs/sidelight/bin/python"
+      },
       "extensions": [
         "ms-python.python",
         "charliermarsh.ruff",
