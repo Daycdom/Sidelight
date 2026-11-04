@@ -1,0 +1,19 @@
+[project]
+name = "sidelight-common"
+version = "0.0.1"
+description = "Shared settings, output saving and encryption helpers for Sidelight."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Dominic" }]
+dependencies = ["platformdirs>=4.2"]
+
+[project.scripts]
+sidelight-common = "sidelight_common.cli:main"
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sidelight_common"]

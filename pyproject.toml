@@ -1,0 +1,67 @@
+[project]
+name = "sidelight-workspace"
+version = "0.0.0"
+description = "Development workspace for the Sidelight packages (not published)."
+requires-python = ">=3.12"
+readme = "README.md"
+
+[tool.uv]
+package = false
+
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[tool.uv.sources]
+sidelight-common = { workspace = true }
+sidelight-reader = { workspace = true }
+sidelight-redact = { workspace = true }
+sidelight-router = { workspace = true }
+sidelight-voice = { workspace = true }
+sidelight-copilot = { workspace = true }
+
+[dependency-groups]
+dev = [
+  "sidelight-common",
+  "sidelight-reader",
+  "sidelight-redact",
+  "sidelight-router",
+  "sidelight-voice",
+  "sidelight-copilot",
+  "ruff>=0.6",
+  "mypy>=1.11",
+  "pytest>=8.3",
+  "pytest-cov>=5.0",
+  "pre-commit>=3.8",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["packages/*/src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "S", "RUF"]
+ignore = []
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "packages/common/src:packages/reader/src:packages/redact/src:packages/router/src:packages/voice/src:packages/copilot/src"
+explicit_package_bases = true
+files = ["packages"]
+exclude = ["/tests/"]
+
+[tool.pytest.ini_options]
+testpaths = ["packages"]
+addopts = "-ra --import-mode=importlib"
+markers = [
+  "windows: needs real Windows APIs (skipped elsewhere)",
+  "macos: needs real macOS APIs (skipped elsewhere)",
+]
+
+[tool.coverage.run]
+source = ["packages"]
+omit = ["*/tests/*"]
