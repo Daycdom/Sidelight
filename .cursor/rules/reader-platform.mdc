@@ -1,0 +1,13 @@
+---
+description: Rules for Screen Reader platform adapters (Windows UI Automation, capture, OCR)
+globs: packages/reader/src/sidelight_reader/platform/**
+alwaysApply: false
+---
+
+Follow @docs/design/reader-v0.1.md. In this folder:
+
+- Implement the Protocols in `platform/base.py`; do not change them without updating the design spec.
+- Use thin wrappers only: `ctypes` for Win32, `comtypes` for UI Automation, `pywinrt` (`winrt-*`) for Windows.Media.Ocr and Graphics Capture.
+- Frame bytes live only in memory and are released right after OCR. No saving frames, even for debugging.
+- Import Windows modules lazily so `import sidelight_reader` works on Linux and macOS.
+- Tests that touch real Windows APIs get `@pytest.mark.windows`; everything else uses fakes.

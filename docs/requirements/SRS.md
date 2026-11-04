@@ -67,7 +67,7 @@ Five open-source Python packages and one closed-source desktop app. See [Archite
 | SR-08 | The system shall stop when the user stops it or the target window closes. | M |
 | SR-09 | The system shall save transcripts only when saving is enabled, to the user-chosen folder, in .txt, .md or .jsonl. | M |
 | SR-10 | The system shall delete saved transcripts older than the user-set retention period. | S |
-| SR-11 | The system shall provide a CLI (`screen-reader list-windows`, `screen-reader watch`). | M |
+| SR-11 | The system shall provide a CLI (`sidelight-reader list-windows`, `read`, `watch`, `sources`). | M |
 | SR-12 | The system shall expose a Python API emitting text-change events. | M |
 
 ### 3.2 Redactor

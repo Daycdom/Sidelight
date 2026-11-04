@@ -1,0 +1,16 @@
+---
+description: Sidelight project rules (privacy, layout, commands, commits)
+alwaysApply: true
+---
+
+Follow the full guide in @AGENTS.md. The rules that must never be broken:
+
+- No network calls outside `sidelight-router` and the user's chosen backend. No telemetry.
+- Never write captured images to disk; capture exactly one window; never full-screen capture.
+- Never put screen text, API keys or personal data in logs, files or test fixtures.
+- Output files only when the user enabled saving.
+- v1 sends text only to AI backends, never images.
+- Platform code only in `packages/reader/src/sidelight_reader/platform/<os>/`, imported lazily.
+- No GPL or LGPL dependencies without asking. Use `uv`, never `pip install`.
+- Conventional Commits with package scope; no AI attribution lines in commits.
+- Run `uv run ruff check --fix`, `uv run ruff format`, `uv run mypy` and tests before calling a change done.
