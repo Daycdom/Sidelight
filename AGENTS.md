@@ -49,9 +49,9 @@ Run lint, mypy and the affected tests before saying a change is done. Never use 
 
 ## Privacy and security rules (never break these)
 
-1. **No network calls** anywhere except `sidelight-router` talking to the backend the user chose (NFR-04). No telemetry, analytics or crash upload.
+1. **No network calls** anywhere except `sidelight-router` talking to the backend the user chose, and ML model downloads the user starts explicitly (NFR-04). Libraries that download on first use (spaCy, Hugging Face, faster-whisper) must be given a local path instead. No telemetry, analytics or crash upload.
 2. **Never write captured images to disk**, and drop frame buffers right after OCR (SR-07). No debug screenshot dumps, even temporarily.
-3. **Capture exactly one window** with window-scoped APIs; never full-screen capture (SR-02, SR-03).
+3. **Capture exactly one window** with window-scoped APIs; never full-screen capture (SR-02, SR-03). Never read password fields (SR-13).
 4. **Screen text never goes in logs** at default level. Log lengths, sources and timings, not content (threat T-13).
 5. **Output files only when the user enabled saving**, to the folder they chose (SR-09, ADR-0008).
 6. **API keys only in the OS credential store** (keyring), never in files, env dumps, logs or tests (AR-02).

@@ -16,7 +16,7 @@ Parts of the suite are useful on their own: screen-to-text, redaction, multi-bac
 
 ## Decision
 
-Option 3. Packages: `common`, `screen-reader`, `redactor`, `ai-router`, `voice`, `copilot`. The desktop app lives in a separate closed-source repo and depends on the published packages.
+Option 3. Packages (PyPI names): `sidelight-common`, `sidelight-reader`, `sidelight-redact`, `sidelight-router`, `sidelight-voice`, `sidelight-copilot`. The desktop app lives in a separate closed-source repo and depends on the published packages.
 
 ## Consequences
 

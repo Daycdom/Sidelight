@@ -53,9 +53,9 @@ flowchart LR
 | --- | --- | --- | --- | --- |
 | T-01 | Information disclosure | Overlapping windows (chats, notifications) get captured | Window-scoped capture APIs only | SR-03 |
 | T-02 | Information disclosure | Secrets or personal data sent to a cloud provider | Redactor before every cloud call; app blocklist; local backend option | CP-01, CP-02 |
-| T-03 | Information disclosure | Screenshots written to disk or leaked from memory | Frames stay in a child process, never written; buffers cleared after OCR | SR-07 |
+| T-03 | Information disclosure | Screenshots written to disk or leaked from memory | Frames stay in a child process, never written; buffers released right after OCR (Python cannot guarantee memory is zeroed) | SR-07 |
 | T-04 | Information disclosure | Saved output or context read by another user or malware | Off by default; optional encryption; app data folder permissions | NFR-06 |
-| T-05 | Spoofing / tampering | Another local process connects to the backend | No network port; pywebview in-process bridge | ADR-0002 |
+| T-05 | Spoofing / tampering | Another local process connects to the backend | No API port: pywebview in-process bridge; bundled UI loaded without the localhost file server, or with its `ssl` option | ADR-0002 |
 | T-06 | Tampering | Prompt injection: on-screen text tells the AI to misbehave | Captured text delimited as data; app only suggests, never acts; no tools given to the model | CP-09 |
 | T-07 | Information disclosure | API keys stolen from config files | Keys only in OS credential store, never in files or logs | AR-02 |
 | T-08 | Elevation / tampering | Malicious update or tampered installer | Signed and notarized builds; update files verified by signature | NFR-07 |
@@ -65,6 +65,8 @@ flowchart LR
 | T-12 | Repudiation / misuse | Tool used to monitor someone else | Visible capture indicator; one window at a time; no remote control; consent notes in docs | UI-02 |
 | T-13 | Information disclosure | Logs contain screen text | No user content in logs at default level | Architecture §8 |
 | T-14 | Information disclosure | Dictation audio leaves the device | Local speech-to-text only | VO-03 |
+| T-15 | Information disclosure | Password fields read through the accessibility API | Skip elements marked as password fields | SR-13 |
+| T-16 | Tampering | Tampered ML model downloaded for Redactor or Voice | Downloads only when the user starts them; pinned model versions and checksums | NFR-04, NFR-08 |
 
 ## 5. Residual risks
 

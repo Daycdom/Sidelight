@@ -32,3 +32,14 @@ jobs:
         run: uv run mypy
       - name: Test
         run: uv run pytest --cov --cov-report=term-missing
+
+  audit:
+    name: Dependency audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Check dependencies for known vulnerabilities (NFR-08)
+        run: |
+          uv export --frozen --no-emit-workspace --no-hashes -o requirements-audit.txt
+          uvx pip-audit -r requirements-audit.txt --disable-pip --no-deps

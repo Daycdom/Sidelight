@@ -13,7 +13,7 @@ Privacy-first desktop assistant that reads the window you choose, removes sensit
 | `sidelight-router` | One interface to Claude, ChatGPT and Ollama with limits and spend caps | Yes, CLI and library |
 | `sidelight-voice` | Local read-aloud and push-to-talk dictation | Yes, CLI and library |
 | `sidelight-copilot` | Combines the above into live suggestions | CLI (`sidelight`) |
-| `sidelight-common` | Shared settings and output saving | Internal |
+| `sidelight-common` | Shared paths, settings and output saving | Internal |
 
 The free desktop app (closed source) is built on these packages.
 

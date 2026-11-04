@@ -13,7 +13,7 @@ Windows is the main development machine, because the Screen Reader needs real Wi
 2. Clone the repo and run the setup script from the repo root:
 
    ```powershell
-   git clone https://github.com/<you>/sidelight.git
+   git clone https://github.com/Daycdom/Sidelight.git sidelight
    cd sidelight
    powershell -ExecutionPolicy Bypass -File scripts\setup-windows.ps1
    ```
@@ -26,14 +26,14 @@ Windows is the main development machine, because the Screen Reader needs real Wi
 WSL gives a Linux shell on Windows with fast git and the same tools as CI. From an Ubuntu WSL terminal:
 
 ```bash
-bash setup-wsl.sh <owner>/sidelight   # script is in scripts/ of this repo
+bash setup-wsl.sh Daycdom/Sidelight   # script is in scripts/ of this repo
 ```
 
 It installs git, the GitHub CLI and uv, signs you in to GitHub, clones the repo to `~/code/sidelight`, installs everything and runs the tests. Open it with `code .` (VS Code's WSL extension).
 
 **Automatic sync:** the repo's VS Code settings fetch every 3 minutes and run "sync" (pull, then push) after every commit, so committing in VS Code keeps GitHub and your machine in step. Git is set to rebase on pull, so your history stays linear.
 
-**Limit:** Python inside WSL is Linux Python. It cannot call Windows UI Automation, Windows Graphics Capture or Windows OCR. Do Screen Reader platform work and run `windows`-marked tests from the Windows setup above (Windows can open the WSL folder at `\\wsl.localhost\Ubuntu\home\<you>\code\sidelight`, or keep a second clone on the Windows side).
+**Limit:** Python inside WSL is Linux Python. It cannot call Windows UI Automation, Windows Graphics Capture or Windows OCR. Do Screen Reader platform work and run `windows`-marked tests from the Windows setup above using a **second clone on the Windows side** (for example `C:\Users\<you>\source\repos\sidelight`). Don't run Windows `uv sync` inside the WSL folder: both would share one `.venv` and overwrite each other's Linux and Windows environments.
 
 ## macOS and Linux
 

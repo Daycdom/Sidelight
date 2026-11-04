@@ -10,7 +10,7 @@ Capture, OCR, ML redaction, AI calls and voice all need a backend language with 
 
 ## Decision
 
-Python 3.12+ for every package. OS APIs are reached through `winrt` / `comtypes` / `uiautomation` on Windows and PyObjC on macOS.
+Python 3.12+ for every package. OS APIs are reached through `ctypes`, `comtypes` (UI Automation) and pywinrt's `winrt-*` packages on Windows and PyObjC on macOS.
 
 ## Consequences
 

@@ -35,13 +35,13 @@ This document lists the testable requirements for every Sidelight component. The
 
 ### 2.1 Product perspective
 
-Five open-source Python packages and one closed-source desktop app. See [Architecture](../architecture/architecture.md).
+Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-pilot and the shared `common`) and one closed-source desktop app. See [Architecture](../architecture/architecture.md).
 
 ### 2.2 Operating environment
 
 | Platform | Release | Minimum |
 | --- | --- | --- |
-| Windows | v1.0 | Windows 10 version 1903 or later, Windows 11 |
+| Windows | v1.0 | Windows 11. Windows 10 22H2 best effort (Microsoft ended mainstream support on 14 October 2025; Windows Graphics Capture window capture itself needs 1903 or later) |
 | macOS | after Windows 1.0 | macOS 13 or later (ScreenCaptureKit) |
 | Linux | later | X11 first; Wayland via portals |
 
@@ -69,6 +69,7 @@ Five open-source Python packages and one closed-source desktop app. See [Archite
 | SR-10 | The system shall delete saved transcripts older than the user-set retention period. | S |
 | SR-11 | The system shall provide a CLI (`sidelight-reader list-windows`, `read`, `watch`, `sources`). | M |
 | SR-12 | The system shall expose a Python API emitting text-change events. | M |
+| SR-13 | The system shall never read text from elements the accessibility API marks as password fields. | M |
 
 ### 3.2 Redactor
 
@@ -87,14 +88,14 @@ Five open-source Python packages and one closed-source desktop app. See [Archite
 
 | ID | Requirement | Priority |
 | --- | --- | --- |
-| AR-01 | The system shall offer one interface for Anthropic, OpenAI and Ollama backends. | M |
+| AR-01 | The system shall offer one interface for Anthropic, OpenAI, Ollama and OpenAI-compatible servers (e.g. vLLM, LM Studio). | M |
 | AR-02 | The system shall store API keys only in the OS credential store. | M |
 | AR-03 | The system shall enforce a per-hour request limit set by the user. | M |
 | AR-04 | The system shall enforce an optional daily spend cap, using provider token prices. | S |
 | AR-05 | The system shall support a fallback backend when the primary is unreachable. | S |
 | AR-06 | The system shall stream responses when the backend supports it. | S |
 | AR-07 | The system shall optionally log requests (time, backend, token counts, cost) without prompt content. | C |
-| AR-08 | The system shall provide a CLI (`ai-router ask`, `ai-router keys`). | M |
+| AR-08 | The system shall provide a CLI (`sidelight-router ask`, `sidelight-router keys`). | M |
 
 ### 3.4 Voice
 
@@ -140,7 +141,7 @@ Five open-source Python packages and one closed-source desktop app. See [Archite
 | NFR-01 | Performance | Idle CPU while watching a static window shall be under 3% on the reference PC. | M |
 | NFR-02 | Performance | Reference PC: 4-core x86-64, 16 GB RAM, Windows 11, no discrete GPU. | M |
 | NFR-03 | Performance | Text change to event shall take under 500 ms with accessibility text. | S |
-| NFR-04 | Privacy | No component shall make network calls except AI Router to the user's chosen backend and the opt-in update check. | M |
+| NFR-04 | Privacy | No component shall make network calls except AI Router to the user's chosen backend, the opt-in update check, and model downloads the user starts explicitly (Redactor and Voice models). | M |
 | NFR-05 | Privacy | No telemetry shall be collected in v1. | M |
 | NFR-06 | Security | Saved output files shall support encryption with a key held in the OS credential store. | S |
 | NFR-07 | Security | Release binaries shall be code-signed (Windows) and notarized (macOS). | M |
@@ -164,7 +165,7 @@ Five open-source Python packages and one closed-source desktop app. See [Archite
 
 | User story (PRD) | Requirements |
 | --- | --- |
-| US-01 | SR-01, SR-02, SR-03 |
+| US-01 | SR-01, SR-02, SR-03, SR-13 |
 | US-02 | AR-01, AR-05 |
 | US-03 | CP-04 |
 | US-04 | CP-03, AR-03, AR-04 |

@@ -10,7 +10,7 @@
 ## 1. Versioning
 
 - [Semantic Versioning 2.0](https://semver.org/): `MAJOR.MINOR.PATCH`. Before 1.0, minor versions may break APIs.
-- Each package is versioned independently. Tags: `<package>-v<version>`, e.g. `redactor-v0.1.0`.
+- Each package is versioned independently. Tags: `<package>-v<version>`, e.g. `redact-v0.1.0`.
 - Each package keeps a `CHANGELOG.md` in [Keep a Changelog](https://keepachangelog.com/) format.
 
 ## 2. Branching
@@ -21,7 +21,7 @@
 
 ## 3. Commits
 
-[Conventional Commits](https://www.conventionalcommits.org/) with the package as scope, e.g. `feat(redactor): add Luhn check for card numbers`. This drives changelog generation.
+[Conventional Commits](https://www.conventionalcommits.org/) with the package as scope, e.g. `feat(redact): add Luhn check for card numbers`. This drives changelog generation.
 
 ## 4. Continuous integration
 
@@ -29,9 +29,9 @@
 | --- | --- | --- |
 | Lint and format | Ubuntu | ruff, ruff format, mypy |
 | Unit and integration tests | Ubuntu, Windows | pytest with coverage report |
-| Platform tests | Windows (macOS from phase 7) | Real OS API tests |
-| Security | Ubuntu | pip-audit, secret scanning, Dependabot |
-| UI | Ubuntu | Vitest, Playwright, type check |
+| Platform tests | Windows (macOS from phase 7) | Real OS API tests (planned; run manually on a Windows PC until then) |
+| Security | Ubuntu | pip-audit in CI; GitHub secret scanning and Dependabot in repo settings |
+| UI | Ubuntu | Vitest, Playwright, type check (desktop app repo, from phase 4) |
 
 ## 5. Release steps
 

@@ -16,10 +16,10 @@ The backend is Python. The UI should be a lightweight, modern web frontend. The 
 
 ## Decision
 
-pywebview. One language and one build. The built-in JS-to-Python bridge removes the need for a localhost port, which any local process could otherwise connect to. Install size is roughly 30 to 60 MB instead of 150 MB or more.
+pywebview. One language and one build. The built-in JS-to-Python bridge runs in-process, so there is no API port that another local process could connect to. (pywebview does start a localhost static-file server when the UI is loaded by relative path; load the bundled UI directly or enable its `ssl` option.) The shell itself adds tens of MB rather than the 150 MB or more of a bundled Chromium; the final size will be dominated by ML models.
 
 ## Consequences
 
 - Good: simplest stack for a solo Python developer; smaller attack surface.
-- Bad: tray, global hotkeys and auto-update need extra libraries (pystray, pynput, a custom updater).
+- Bad: tray, global hotkeys and auto-update need extra code: thin OS wrappers for tray and hotkeys (pystray and pynput are LGPL-3.0, see ADR-0006) and a custom updater.
 - Follow-ups: all UI-to-Python calls go through `ui/src/api.ts` (UI-06) so the shell can be swapped for Tauri or Electron later by rewriting that file and the shell only.

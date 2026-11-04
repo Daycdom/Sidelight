@@ -74,10 +74,10 @@ flowchart TB
 | Screen Reader | Window listing, text extraction, change events | UI Automation, Windows Graphics Capture, Windows.Media.Ocr; later AX, ScreenCaptureKit, Vision; Tesseract fallback |
 | Redactor | Detect and mask sensitive data | Rules, Presidio, spaCy or GLiNER |
 | AI Router | Talk to AI backends with limits | Anthropic and OpenAI SDKs, Ollama REST, keyring |
-| Voice | Read-aloud and dictation | pyttsx3 / OS voices, faster-whisper |
-| Co-pilot | Orchestrate the loop and context | asyncio, SQLite (encrypted) |
+| Voice | Read-aloud and dictation | OS voices (Windows SAPI / WinRT speech, macOS AVSpeechSynthesizer), faster-whisper |
+| Co-pilot | Orchestrate the loop and context | asyncio, SQLite with encryption (approach to be decided in an ADR: SQLCipher or app-level encryption with `cryptography`) |
 | common | Shared settings and output saving | platformdirs, keyring, cryptography |
-| Desktop app | UI and OS integration | pywebview, pystray, pynput |
+| Desktop app | UI and OS integration | pywebview; tray and global hotkeys through thin OS wrappers (pywin32/ctypes on Windows, PyObjC on macOS), avoiding LGPL libraries |
 
 ## 5. Runtime view: one suggestion
 
@@ -103,7 +103,7 @@ sequenceDiagram
 
 ## 6. Process model
 
-- The desktop app runs one Python process. pywebview hosts the UI and exposes a Python API object to JavaScript (no network port).
+- The desktop app runs one main Python process. pywebview hosts the UI and exposes a Python API object to JavaScript through the web view's in-process bridge, not over HTTP. If the UI is loaded from local files by relative path, pywebview also starts a localhost server for those static files only; prefer loading the bundled UI so no port is opened, or enable pywebview's `ssl` option.
 - Screen Reader capture and OCR run in a child process so native-library crashes or leaks cannot take down the UI; it sends only text back over a pipe (NFR-09).
 - CLIs run each package in a single process.
 
@@ -117,6 +117,7 @@ sequenceDiagram
 | Per-file context | Encrypted SQLite in app data folder | Until user deletes or retention | Summaries sent with prompts, redacted |
 | API keys | OS credential store | Until user removes | Only to their own provider |
 | Settings, profiles | JSON in app data folder | Permanent | Never |
+| Downloaded ML models | App data folder | Until user removes | Downloaded only when the user starts it |
 
 Details: [Privacy and data handling](../security/privacy.md).
 

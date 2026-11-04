@@ -6,7 +6,7 @@
 | Version | 0.1 |
 | Owner | Dominic |
 | Package | `sidelight-reader` |
-| Requirements | SR-01 to SR-12, NFR-01, NFR-03, NFR-04, NFR-09, NFR-11 |
+| Requirements | SR-01 to SR-13, NFR-01, NFR-03, NFR-04, NFR-09, NFR-11 |
 | Last updated | 2026-11-04 |
 
 ## 1. Goal
@@ -17,7 +17,7 @@ Ship `sidelight-reader` 0.1: a standalone CLI and Python library that, on Window
 
 **In v0.1**
 
-- Windows only (Windows 10 1903+ for Graphics Capture; Windows 11 recommended).
+- Windows only: Windows 11, with Windows 10 22H2 best effort (Graphics Capture window capture needs 1903+).
 - Window listing, single-window watch, one-shot read.
 - Sources: UI Automation text (accessibility), Windows.Media.Ocr over Windows Graphics Capture frames.
 - Change events on text, not pixels (ADR-0010).
@@ -77,11 +77,11 @@ Defaults: `--source auto`, `--interval 0.5`, `--format text`. Saving is off unle
 ```python
 from sidelight_reader import Reader, WatchOptions
 
-reader = Reader()                       # picks the platform backend
-win = reader.find(title="Notepad")      # -> WindowInfo (raises on 0 or >1 matches)
-snap = reader.read(win)                 # -> TextSnapshot | None
+reader = Reader()  # picks the platform backend
+win = reader.find(title="Notepad")  # -> WindowInfo (raises on 0 or >1 matches)
+snap = reader.read(win)  # -> TextSnapshot | None
 for event in reader.watch(win, WatchOptions(interval=0.5)):
-    ...                                 # TextChanged | StatusChanged | Ended
+    ...  # TextChanged | StatusChanged | Ended
 ```
 
 - `watch()` is a blocking iterator; `reader.stop()` (or breaking the loop) ends it cleanly.
@@ -114,8 +114,8 @@ sidelight_reader/
 
 `auto` tries sources in order and sticks with the first that returns non-empty text:
 
-1. **UIA**: find the window's element, look for a `TextPattern` (documents, editors) or `ValuePattern` (inputs). Read `DocumentRange.GetText(max_chars)`; caret from the selection range when present. Cap at 200,000 characters per read.
-2. **OCR**: capture the window's own pixels with Graphics Capture (works when partly covered; never captures other windows, SR-03), run `OcrEngine.TryCreateFromUserProfileLanguages()`, join lines.
+1. **UIA**: find the window's element, look for a `TextPattern` (documents, editors) or `ValuePattern` (inputs). Read `DocumentRange.GetText(max_chars)`; caret from the selection range when present. Cap at 200,000 characters per read. Skip any element whose `IsPassword` property is true (SR-13).
+2. **OCR**: capture the window's own pixels with Graphics Capture (works when partly covered; never captures other windows, SR-03), run `OcrEngine.TryCreateFromUserProfileLanguages()`, join lines. Frames larger than `OcrEngine.MaxImageDimension` must be scaled down or split into tiles first.
 
 If the current source fails three reads in a row, fall back to the next one and emit a `source-changed` status event. Re-try the better source every 30 seconds.
 
@@ -159,9 +159,9 @@ Small throwaway scripts in `packages/reader/spikes/` (not shipped) to prove each
 | ID | Question | Pass when |
 | --- | --- | --- |
 | S1 | Can `ctypes` list the same windows the taskbar shows (skip cloaked, tool and untitled windows)? | List matches Alt+Tab on your PC |
-| S2 | What text does UIA give for Notepad, Word, VS Code, Chrome, Windows Terminal? | Table of app → text yes/no, caret yes/no, ms per read. Note Chromium/Electron apps may need accessibility switched on (e.g. VS Code "screen reader optimized" mode) |
+| S2 | What text does UIA give for Notepad, Word, VS Code, Chrome, Windows Terminal, and is a password field skipped? | Table of app → text yes/no, caret yes/no, ms per read. Note Chromium/Electron apps may need accessibility switched on (e.g. VS Code "screen reader optimized" mode) |
 | S3 | Are UIA `TextChanged` events reliable enough to replace polling? | Events fire for typing in at least Notepad and Word |
-| S4 | Can Python capture one window with Graphics Capture, including when it's partly covered? | Frame of the target only, other windows absent; note whether the yellow capture border can be turned off (`IsBorderRequired`, Windows 11) |
+| S4 | Can Python capture one window with Graphics Capture, including when it's partly covered? | Frame of the target only, other windows absent; the colored capture border will show (hiding it needs a packaged app, see §10) |
 | S5 | Windows OCR quality and speed on S4 frames (light and dark themes, code font) | Readable text; ms per frame on your PC |
 | S6 | CPU cost of a 0.5 s watch loop on a static window | Under 3% (NFR-01) |
 | S7 | Child process + pipe overhead | Event latency increase under 50 ms |
@@ -179,7 +179,7 @@ Results feed `docs/design/app-compatibility.md` (ADR-0004 follow-up).
 
 ## 9. Definition of done
 
-- All "M" requirements SR-01 to SR-12 met and traced in tests.
+- All "M" requirements SR-01 to SR-13 met and traced in tests.
 - Privacy tests in §5.4 pass.
 - `sources` results recorded for at least five common apps.
 - NFR-01 and NFR-03 measured on your PC and written in the changelog.
@@ -188,5 +188,5 @@ Results feed `docs/design/app-compatibility.md` (ADR-0004 follow-up).
 ## 10. Open questions
 
 1. Should `watch` emit full text each time (current plan) or diffs? Full text is simpler; revisit if large documents make it slow.
-2. Should the yellow capture border stay on? It's a privacy signal (T-12); proposal: keep it on by default, allow turning it off.
+2. The capture border stays on. Windows only lets an app hide it after a user consent prompt, and that needs a packaged (MSIX) app declaring the `graphicsCaptureWithoutBorder` capability, which a plain Python CLI isn't. It's also a useful privacy signal (T-12). Revisit for the packaged desktop app.
 3. Which OCR language: user profile languages (proposal) or a `--lang` option too?
