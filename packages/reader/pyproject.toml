@@ -1,0 +1,19 @@
+[project]
+name = "sidelight-reader"
+version = "0.0.1"
+description = "Turns an approved app window into live text, on-device."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Dominic" }]
+dependencies = ["sidelight-common"]
+
+[project.scripts]
+sidelight-reader = "sidelight_reader.cli:main"
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sidelight_reader"]

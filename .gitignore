@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+build/
+dist/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Packaging
+*.spec.bak
+
+# Editors and OS
+.idea/
+.DS_Store
+Thumbs.db
+
+# Never commit user output, local settings or secrets
+output/
+*.local.json
+.env
+.env.*

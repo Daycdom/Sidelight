@@ -1,0 +1,19 @@
+[project]
+name = "sidelight-router"
+version = "0.0.1"
+description = "One interface to Claude, ChatGPT and Ollama with rate limits and spend caps."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Dominic" }]
+dependencies = ["sidelight-common"]
+
+[project.scripts]
+sidelight-router = "sidelight_router.cli:main"
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sidelight_router"]

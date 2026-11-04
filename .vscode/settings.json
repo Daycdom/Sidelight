@@ -1,0 +1,20 @@
+{
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv",
+  "python.testing.pytestEnabled": true,
+  "python.testing.pytestArgs": [
+    "packages"
+  ],
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+  "files.eol": "\n",
+  "git.autofetch": true,
+  "git.autofetchPeriod": 180,
+  "git.postCommitCommand": "sync",
+  "git.confirmSync": false,
+  "git.pullBeforeCheckout": true
+}
