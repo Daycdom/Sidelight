@@ -20,5 +20,6 @@ Decisions are recorded with [MADR](https://adr.github.io/madr/) (Markdown Archit
 | [0014](0014-local-only-storage.md) | Keep Sidelight's own data on this machine only | Accepted | 2026-11-05 |
 | [0015](0015-storage-size.md) | Keep storage small and deletions real | Accepted | 2026-11-05 |
 | [0016](0016-memory-management.md) | Contain and catch memory leaks | Accepted | 2026-11-05 |
+| [0017](0017-broker-and-sandboxed-workers.md) | A small unsandboxed broker reads windows; everything else runs sandboxed | Accepted | 2026-11-05 |
 
 New ADRs copy [template.md](template.md).

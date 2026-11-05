@@ -69,6 +69,7 @@ flowchart LR
 | T-16 | Tampering | Tampered ML model downloaded for Redactor or Voice | Downloads only when the user starts them; pinned model versions and checksums | NFR-04, NFR-08 |
 | T-17 | Information disclosure | An agent connected through the bridge sends screen text somewhere the user didn't expect | Always redacted; user approves the window; read-only; indicator and read log; docs state the bridge is the privacy boundary | AG-03, AG-04, AG-06 |
 | T-18 | Tampering | Screen text injects instructions into a connected agent that has its own tools | Results marked as untrusted content; read-only bridge; warn in setup docs | AG-02, AG-05 |
+| T-19 | Elevation / tampering | A bug or malicious model file compromises OCR, Redactor, router or Voice | Broker model: only the window reader runs unsandboxed; other workers run in AppContainer / App Sandbox with minimal access | NFR-22 |
 
 ## 5. Residual risks
 

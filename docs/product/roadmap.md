@@ -16,6 +16,6 @@ Phases run in order. Highlighted releases ship publicly. No dates are set yet.
 | 3b Agent Bridge (proposed) | Local MCP server giving other agents read-only, redacted window text (ADR-0011). Needs only Reader and Redactor, so it can start any time after phase 2 | **Bridge v0.1** |
 | 4 Desktop UI | pywebview shell, settings, profiles, suggestion panel, tray, hotkeys | Beta |
 | 5 Voice | Local read-aloud, push-to-talk dictation, voice prompts | **Voice v0.1** |
-| 6 Windows release | Signed installer, auto-update, first-run privacy screen | **Windows app 1.0** |
-| 7 macOS port | ScreenCaptureKit, Accessibility API, Vision OCR, notarization | **macOS 1.0** |
+| 6 Windows release | Signed installer, auto-update, first-run privacy screen, sandboxed workers (ADR-0017) | **Windows app 1.0** |
+| 7 macOS port | ScreenCaptureKit, Accessibility API, Vision OCR, App Sandbox entitlements, notarization | **macOS 1.0** |
 | 8 Later | Built-in on-device model, Linux, opt-in image input, game suggestions, enterprise tier | — |

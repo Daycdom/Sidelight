@@ -179,6 +179,7 @@ Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-p
 | NFR-19 | Reliability | Capture, OCR, Redactor ML and Voice models shall run in worker processes with an OS-enforced memory cap where available (Windows Job Objects), recycled by the supervisor after a work limit or memory budget (ADR-0016). | M |
 | NFR-20 | Reliability | Every queue, buffer, cache and history shall have a maximum size. | M |
 | NFR-21 | Reliability | Memory of the main process shall not grow more than 50 MB over 8 hours of watching a changing window on the reference PC (proposed target). | S |
+| NFR-22 | Security | In installed builds, every worker except the window-reading broker shall run in an OS sandbox with only the access it needs: network for AI Router only, microphone for Voice only (ADR-0017). | M |
 
 ## 5. Constraints
 

@@ -108,6 +108,7 @@ sequenceDiagram
 
 - The desktop app runs one main Python process. pywebview hosts the UI and exposes a Python API object to JavaScript through the web view's in-process bridge, not over HTTP. If the UI is loaded from local files by relative path, pywebview also starts a localhost server for those static files only; prefer loading the bundled UI so no port is opened, or enable pywebview's `ssl` option.
 - Screen Reader capture and OCR run in a child process so native-library crashes or leaks cannot take down the UI; it sends only text back over a pipe (NFR-09).
+- Only a small broker process reads windows; in installed builds every other worker runs sandboxed with the minimum access it needs (ADR-0017).
 - Redactor ML and Voice models also run in worker processes. A supervisor watches each worker's memory and recycles it after a work limit or memory budget, which contains native memory leaks and clears screen text held in memory (ADR-0016).
 - CLIs run each package in a single process, except `watch`-style long runs, which use the same worker and recycling model.
 
