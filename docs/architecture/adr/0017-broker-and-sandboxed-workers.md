@@ -1,6 +1,6 @@
 # ADR-0017: A small unsandboxed broker reads windows; everything else runs sandboxed
 
-- Status: Accepted (sandbox switch-on gated by a phase 6 spike)
+- Status: Accepted (sandbox switch-on gated by a phase 7 spike)
 - Date: 2026-11-05
 - Deciders: Dominic
 
@@ -35,4 +35,4 @@ Option 3.
 
 - Good: a compromised OCR, Redactor, router or voice process can't read files, see other windows, or reach the network (except the router, to the chosen backend).
 - Bad: more setup (capabilities, file permissions, an installer); debugging sandboxed workers is harder; it only works fully in installed builds.
-- Follow-ups: phase 6 spike (Python worker in an AppContainer: start-up, Windows OCR, model loading, pipes); NFR-22; threat model T-19; phase 7 macOS entitlements.
+- Follow-ups: phase 7 spike (Python worker in an AppContainer: start-up, Windows OCR, model loading, pipes); NFR-22; threat model T-19; phase 8 macOS entitlements.

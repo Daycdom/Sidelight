@@ -15,7 +15,7 @@ Privacy-first desktop assistant that reads the window you choose, removes sensit
 | `sidelight-copilot` | Combines the above into live suggestions | CLI (`sidelight`) |
 | `sidelight-common` | Shared paths, settings and output saving | Internal |
 
-The free desktop app (closed source) is built on these packages.
+The free, open-source version of Sidelight is these command-line tools. The desktop app with a graphical interface is built on them; it is closed source and may be paid.
 
 ## Privacy in one paragraph
 

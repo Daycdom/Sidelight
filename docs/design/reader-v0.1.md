@@ -141,6 +141,92 @@ The parent recycles the worker (ADR-0016) after 10,000 frames, 4 hours, or when 
 | No text in logs (T-13) | Logs record lengths, source names and timings only | Test captures logs during a watch and asserts the sample text never appears |
 | Saving only on request (SR-09) | `transcript.py` is only constructed when `--save` is given | Test that a plain watch writes no files |
 
+### 5.5 Diagrams
+
+**`watch` command, end to end**
+
+```mermaid
+flowchart TD
+  start([sidelight-reader watch TARGET]) --> resolve{Find target window}
+  resolve -- none or several match --> exit2([Exit 2, list matches])
+  resolve -- exactly one --> banner[Show 'watching title' on stderr]
+  banner --> spawn[Start supervised worker process]
+  spawn --> read[Read text with current source]
+  read --> ok{Got text?}
+  ok -- no, 3 times in a row --> fallback{Next source available?}
+  fallback -- yes --> switch[Switch source, emit source-changed] --> read
+  fallback -- no --> exit3([Exit 3, no source could read the window])
+  ok -- yes --> changed{Text or caret changed?}
+  changed -- no --> wait[Wait interval]
+  changed -- yes --> emit[Emit text event] --> save{Saving enabled?}
+  save -- yes --> write[Append to transcript] --> wait
+  save -- no --> wait
+  wait --> alive{Window open and not stopped?}
+  alive -- yes --> budget{Worker over work limit or memory budget?}
+  budget -- yes --> recycle[Restart worker, emit worker-restarted] --> read
+  budget -- no --> read
+  alive -- window closed --> endc([Emit end: window-closed])
+  alive -- Ctrl+C --> endu([Emit end: user-stopped])
+```
+
+**Source chain inside one read (ADR-0004)**
+
+```mermaid
+flowchart LR
+  r[Read request] --> uia{UI Automation text pattern?}
+  uia -- yes --> pw{Password field?}
+  pw -- yes --> skip[Skip element]
+  pw -- no --> txt[Return text, caret, focus]
+  uia -- no --> cap[Capture this window only]
+  cap --> dirty{Frame changed since last OCR?}
+  dirty -- no --> last[Reuse last text]
+  dirty -- yes --> ocr[Windows OCR, scaled to max size]
+  ocr --> drop[Release frame buffer] --> sim{Similarity under 0.99?}
+  sim -- yes --> txt2[Return new text]
+  sim -- no --> last
+```
+
+**Processes and what crosses between them**
+
+```mermaid
+sequenceDiagram
+  participant U as User / CLI
+  participant P as Parent (cli + supervisor)
+  participant W as Worker (capture, UIA, OCR)
+  participant OS as Windows APIs
+  U->>P: watch --title "Notepad"
+  P->>W: start(window handle, options)
+  loop every interval
+    W->>OS: read text or capture frame
+    OS-->>W: text / pixels (pixels stay in the worker)
+    W-->>P: text event (text only)
+    P-->>U: print line / JSONL
+  end
+  P->>W: recycle when over budget
+  W-->>P: exit
+  P->>W: start again (same window)
+  U->>P: Ctrl+C
+  P->>W: stop
+  P-->>U: end event
+```
+
+**Watch states**
+
+```mermaid
+stateDiagram-v2
+  [*] --> Starting
+  Starting --> ReadingUIA: UIA works
+  Starting --> ReadingOCR: no UIA text
+  ReadingUIA --> ReadingOCR: 3 failed reads
+  ReadingOCR --> ReadingUIA: retry every 30 s succeeds
+  ReadingUIA --> Recycling: over budget
+  ReadingOCR --> Recycling: over budget
+  Recycling --> Starting
+  ReadingUIA --> Ended: window closed / Ctrl+C
+  ReadingOCR --> Ended: window closed / Ctrl+C
+  Ended --> [*]
+```
+
 ## 6. Dependencies
 
 All Windows-only, declared with `; sys_platform == 'win32'` markers so the package installs anywhere.

@@ -86,12 +86,14 @@ Detailed, testable requirements live in the [SRS](../requirements/SRS.md). Headl
 
 ## 8. Success metrics
 
+WIP: these are placeholders until spikes and benchmarks give real baselines (see [open decisions](open-decisions.md) #3).
+
 | Metric | Proposed target for v1.0 |
 | --- | --- |
 | Text accuracy on tested apps (Notepad, Word, VS Code, Chrome) | 98% or higher character accuracy |
 | Redactor recall on the planted-PII test set | 95% or higher |
 | Idle CPU while watching a static window | Under 3% |
-| Time from typing pause to suggestion shown (local model on test PC) | Under 3 seconds |
+| Time from typing pause to suggestion shown | Under 3 seconds with a cloud or GPU-backed backend; measured but not targeted for CPU-only local models, which can take 10 to 30 seconds |
 | Suggestions dismissed without action | Tracked locally only; target under 50% |
 
 ## 9. Release plan
@@ -101,15 +103,17 @@ Detailed, testable requirements live in the [SRS](../requirements/SRS.md). Headl
 | Screen Reader v0.1 | Windows CLI |
 | Redactor v0.1 | CLI and library |
 | AI Router v0.1 | CLI and library |
-| Co-pilot CLI v0.1 | Combined suggestions in the terminal |
 | Voice v0.1 | Read-aloud and dictation |
-| Windows app 1.0 | Free desktop app, signed installer |
+| Co-pilot CLI v0.1 | Combined suggestions in the terminal |
+| Agent Bridge v0.1 (later, not a priority) | Redacted window text for other AI agents |
+| Windows app 1.0 | Desktop app (closed source; free or paid, to be decided), signed installer |
 | macOS 1.0 | Port of all of the above |
 
 ## 10. Distribution and licensing
 
 - Sub-projects and Co-pilot CLI: open source under Apache 2.0 (see ADR-0006).
-- Desktop app: free, closed source.
+- Desktop app (graphical interface): closed source; may later offer a paid edition (one-time purchase and/or a cheap subscription). Core usability is the same for free and paid users; paid adds quality-of-life features only, and privacy and security features are never paid-only. Pricing to be decided.
+- The free version of Sidelight is the open-source CLIs.
 - Enterprise tier: paid, later, with extra features (admin policy, managed deployment, audit logs).
 
 ## 11. Risks and open questions

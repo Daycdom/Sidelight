@@ -75,7 +75,7 @@ flowchart TB
 | Redactor | Detect and mask sensitive data | Rules, Presidio, spaCy or GLiNER |
 | AI Router | Talk to AI backends with limits | Anthropic and OpenAI SDKs, Ollama REST, keyring |
 | Voice | Read-aloud and dictation | OS voices (Windows SAPI / WinRT speech, macOS AVSpeechSynthesizer), faster-whisper |
-| Co-pilot | Orchestrate the loop and context | asyncio, SQLite with encryption (approach to be decided in an ADR: SQLCipher or app-level encryption with `cryptography`) |
+| Co-pilot | Orchestrate the loop and context | asyncio, SQLite with app-level AES-GCM encryption via `cryptography` (ADR-0019, proposed) |
 | common | Shared settings and output saving | platformdirs, keyring, cryptography |
 | Agent Bridge (proposed) | Read-only, redacted window text for other AI agents over MCP (ADR-0011) | `mcp` Python SDK, stdio transport |
 | Desktop app | UI and OS integration | pywebview; tray and global hotkeys through thin OS wrappers (pywin32/ctypes on Windows, PyObjC on macOS), avoiding LGPL libraries |
@@ -143,6 +143,6 @@ See [ADR index](adr/README.md).
 | Risk | Mitigation |
 | --- | --- |
 | Inconsistent accessibility text across apps | OCR fallback; compatibility list; per-app overrides |
-| macOS permission attribution for bundled Python | Sign everything inside one app bundle; test early in phase 7 |
+| macOS permission attribution for bundled Python | Sign everything inside one app bundle; test early in phase 8 |
 | ML model size for Redactor | Small spaCy model by default; larger models optional download |
 | pywebview limits (tray, hotkeys, updates) | Extra libraries; shell isolated behind api.ts so it can be swapped |

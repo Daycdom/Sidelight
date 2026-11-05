@@ -1,6 +1,6 @@
 # ADR-0011: Offer screen text to other AI agents through a local MCP server
 
-- Status: Proposed
+- Status: Proposed (deferred to "Later" on 2026-11-05; not a priority)
 - Date: 2026-11-05
 - Deciders: Dominic
 
@@ -17,7 +17,7 @@ Users already run AI agents and assistants: Hermes Agent, Claude Desktop and Cla
 
 ## Decision
 
-Option 3, as a new standalone package `sidelight-bridge` (CLI `sidelight-bridge`), built on Screen Reader and Redactor only. It does not need Co-pilot or AI Router, so it can ship right after Redactor v0.1.
+Option 3, as a new standalone package `sidelight-bridge` (CLI `sidelight-bridge`), built on Screen Reader and Redactor only. It does not need Co-pilot or AI Router. It is scheduled for the "Later" phase.
 
 Rules:
 

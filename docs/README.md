@@ -12,7 +12,10 @@
 | Quality | [Test plan](quality/test-plan.md) | How each release is verified |
 | Process | [Development and release process](process/release-process.md) | Versioning, branching, CI, releasing |
 | Process | [Developer setup](process/dev-setup.md) | Getting a working dev environment |
-| Design | [Screen Reader v0.1](design/reader-v0.1.md) | How the first package is built: CLI, API, internals, spikes |
+| Product | [Open decisions (WIP)](product/open-decisions.md) | Working answers awaiting review |
+| Design | [Screen Reader v0.1](design/reader-v0.1.md) | How the first package is built: CLI, API, internals, flowcharts, spikes |
+| Process | [Definition of done](process/definition-of-done.md) | When a change, spike or release counts as finished |
+| Reference | [Glossary](glossary.md) | Terms used across the docs |
 | Process | [Agent guide](../AGENTS.md) | Rules for AI coding assistants working in this repo |
 
 ## Keeping docs current

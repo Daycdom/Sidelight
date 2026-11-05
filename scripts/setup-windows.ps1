@@ -14,7 +14,7 @@ function Install-IfMissing($command, $wingetId) {
 Install-IfMissing git    "Git.Git"
 Install-IfMissing uv     "astral-sh.uv"
 Install-IfMissing code   "Microsoft.VisualStudioCode"
-Install-IfMissing node   "OpenJS.NodeJS.LTS"   # needed from phase 4 (desktop UI)
+Install-IfMissing node   "OpenJS.NodeJS.LTS"   # needed from phase 6 (desktop UI)
 
 # Refresh PATH for this session so newly installed tools are found.
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" +

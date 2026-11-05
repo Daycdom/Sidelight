@@ -14,12 +14,14 @@ Decisions are recorded with [MADR](https://adr.github.io/madr/) (Markdown Archit
 | [0008](0008-opt-in-output-storage.md) | Output files are opt-in | Accepted | 2026-11-04 |
 | [0009](0009-text-only-ai-input-v1.md) | Text-only AI input for v1 | Accepted | 2026-11-04 |
 | [0010](0010-change-detection-on-text.md) | Detect changes on text, not pixels | Accepted | 2026-11-04 |
-| [0011](0011-agent-bridge-mcp.md) | Offer screen text to other AI agents through a local MCP server | Proposed | 2026-11-05 |
+| [0011](0011-agent-bridge-mcp.md) | Offer screen text to other AI agents through a local MCP server | Proposed, deferred | 2026-11-05 |
 | [0012](0012-approve-every-send.md) | Redact, show, then ask before anything is sent | Accepted | 2026-11-05 |
 | [0013](0013-redaction-cache.md) | Redact ahead of time and cache results in the context store | Accepted | 2026-11-05 |
 | [0014](0014-local-only-storage.md) | Keep Sidelight's own data on this machine only | Accepted | 2026-11-05 |
 | [0015](0015-storage-size.md) | Keep storage small and deletions real | Accepted | 2026-11-05 |
 | [0016](0016-memory-management.md) | Contain and catch memory leaks | Accepted | 2026-11-05 |
 | [0017](0017-broker-and-sandboxed-workers.md) | A small unsandboxed broker reads windows; everything else runs sandboxed | Accepted | 2026-11-05 |
+| [0018](0018-two-repos-standalone-apps.md) | Two repositories, with a standalone app per tool | Accepted | 2026-11-05 |
+| [0019](0019-context-store-encryption.md) | Encrypt the context store at the application level | Proposed | 2026-11-05 |
 
 New ADRs copy [template.md](template.md).

@@ -29,9 +29,9 @@
 | --- | --- | --- |
 | Lint and format | Ubuntu | ruff, ruff format, mypy |
 | Unit and integration tests | Ubuntu, Windows | pytest with coverage report |
-| Platform tests | Windows (macOS from phase 7) | Real OS API tests (planned; run manually on a Windows PC until then) |
+| Platform tests | Windows (macOS from phase 8) | Real OS API tests (planned; run manually on a Windows PC until then) |
 | Security | Ubuntu | pip-audit in CI; GitHub secret scanning and Dependabot in repo settings |
-| UI | Ubuntu | Vitest, Playwright, type check (desktop app repo, from phase 4) |
+| UI | Ubuntu | Vitest, Playwright, type check (desktop app repo, from phase 6) |
 
 ## 5. Release steps
 
@@ -50,3 +50,18 @@ Fix on a branch from `main`, release as a PATCH version. Security fixes follow [
 ## 7. Documentation updates
 
 A PR that changes behavior updates the matching SRS requirement, ADR (new one if a decision changes), and user docs in the same PR.
+
+## 8. Distribution
+
+Decided 2026-11-05: most users install from the web, so the website is the front door.
+
+| Channel | For | Notes |
+| --- | --- | --- |
+| Website (GitHub Pages at sidelight.friendzone.dev) | Everyone | A landing page listing every tool and one page per tool, each with a "Download for Windows" button. Buttons link to the installer on that tool's GitHub release; a workflow refreshes the page on each release. Shows SHA-256 checksums |
+| GitHub Releases | Downloads behind the website, developers | One release per tool tag, titled by tool ("Sidelight Redact 0.1.0") |
+| PyPI | CLI users | `pipx install sidelight-<tool>`; each tool's README is its PyPI page |
+| winget | Enthusiasts | Optional extra once installers exist |
+
+Not planned: Microsoft Store (few users install from it), and separate repos per tool. Each tool still gets its own page, download and changelog.
+
+Web downloads depend on code signing: unsigned or newly signed installers trigger a Windows SmartScreen warning until the certificate builds reputation. Sign every installer (NFR-07), keep one certificate for all tools so reputation is shared, and expect warnings for the first releases.

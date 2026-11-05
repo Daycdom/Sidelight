@@ -19,4 +19,4 @@ Privacy comes first in every decision. Sidelight keeps a context store, a redact
 
 - Good: nothing Sidelight stores follows the user to the cloud or another PC without them choosing it.
 - Bad: context and cache don't carry over to a second PC, and a reinstall or new machine starts fresh (the saved-file backup in ADR-0013 helps if the user saves output).
-- Follow-ups: NFR-14, NFR-15; sync-folder detection in `sidelight-common`; macOS backup exclusion to be decided in phase 7.
+- Follow-ups: NFR-14, NFR-15; sync-folder detection in `sidelight-common`; macOS backup exclusion to be decided in phase 8.

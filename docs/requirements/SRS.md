@@ -161,7 +161,7 @@ Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-p
 | NFR-01 | Performance | Idle CPU while watching a static window shall be under 3% on the reference PC. | M |
 | NFR-02 | Performance | Reference PC: 4-core x86-64, 16 GB RAM, Windows 11, no discrete GPU. | M |
 | NFR-03 | Performance | Text change to event shall take under 500 ms with accessibility text. | S |
-| NFR-04 | Privacy | No component shall make network calls except AI Router to the user's chosen backend, the opt-in update check, and model downloads the user starts explicitly (Redactor and Voice models). | M |
+| NFR-04 | Privacy | No component shall make network calls except AI Router to the user's chosen backend, the opt-in update check, a one-time license activation when a paid user first enters their key (ADR-0006), and model downloads the user starts explicitly (Redactor and Voice models). | M |
 | NFR-05 | Privacy | No telemetry shall be collected in v1. | M |
 | NFR-06 | Security | Saved output files shall support encryption with a key held in the OS credential store. | S |
 | NFR-07 | Security | Release binaries shall be code-signed (Windows) and notarized (macOS). | M |
