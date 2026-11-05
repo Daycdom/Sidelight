@@ -15,3 +15,4 @@ Each item below has a working answer so development isn't blocked. The docs alre
 | 4 | Is "Sidelight" safe to use as a name? | Keep as working name. Before the first public release with branding: search USPTO (classes 9 and 42) and WIPO Global Brand Database, including look-alikes such as "Slidelight"; consider a lawyer's knockout search | README, product-decisions | Before the Windows app 1.0 |
 | 5 | Accept the Agent Bridge? | Deferred, not a priority | ADR-0011 | Later phase |
 | 6 | Paid edition pricing | One-time purchase and/or cheap subscription, QoL features only, offline signed keys with one-time activation | ADR-0006 | Phase 7 |
+| 7 | What context is missing from the Reader diagrams? | Draft diagrams are in the spec; Dominic to note what feels missing (for example timings, event names or the user-facing view) and the diagrams get a second pass | Reader spec §5.5 | Before the Reader build starts |

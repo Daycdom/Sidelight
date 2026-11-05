@@ -143,47 +143,78 @@ The parent recycles the worker (ADR-0016) after 10,000 frames, 4 hours, or when 
 
 ### 5.5 Diagrams
 
+> **Draft.** These diagrams are a first pass and still missing context; they will be revisited before the Reader build starts.
+>
+> Colors: blue = start or end, yellow = decision, grey = step, green = privacy safeguard, red = error exit, purple "↻ Read" = go back to "Read text with current source".
+
 **`watch` command, end to end**
 
 ```mermaid
 flowchart TD
   start([sidelight-reader watch TARGET]) --> resolve{Find target window}
-  resolve -- none or several match --> exit2([Exit 2, list matches])
+  resolve -- none or several match --> exit2([Exit 2: list matches])
   resolve -- exactly one --> banner[Show 'watching title' on stderr]
   banner --> spawn[Start supervised worker process]
   spawn --> read[Read text with current source]
   read --> ok{Got text?}
-  ok -- no, 3 times in a row --> fallback{Next source available?}
-  fallback -- yes --> switch[Switch source, emit source-changed] --> read
-  fallback -- no --> exit3([Exit 3, no source could read the window])
+  ok -- "no, 3 times in a row" --> fallback{Another source available?}
+  fallback -- no --> exit3([Exit 3: no source could read the window])
+  fallback -- yes --> switch[Switch source, emit source-changed]
+  switch --> again1(("↻ Read"))
   ok -- yes --> changed{Text or caret changed?}
-  changed -- no --> wait[Wait interval]
-  changed -- yes --> emit[Emit text event] --> save{Saving enabled?}
-  save -- yes --> write[Append to transcript] --> wait
+  changed -- yes --> emit[Emit text event]
+  emit --> save{Saving enabled?}
+  save -- yes --> write[Append to transcript]
   save -- no --> wait
+  write --> wait
+  changed -- no --> wait[Wait interval]
   wait --> alive{Window open and not stopped?}
-  alive -- yes --> budget{Worker over work limit or memory budget?}
-  budget -- yes --> recycle[Restart worker, emit worker-restarted] --> read
-  budget -- no --> read
-  alive -- window closed --> endc([Emit end: window-closed])
-  alive -- Ctrl+C --> endu([Emit end: user-stopped])
+  alive -- window closed --> endc([End: window-closed])
+  alive -- Ctrl+C --> endu([End: user-stopped])
+  alive -- yes --> budget{Worker over work or memory budget?}
+  budget -- yes --> recycle[Restart worker, emit worker-restarted]
+  budget -- no --> again2(("↻ Read"))
+  recycle --> again3(("↻ Read"))
+  classDef term fill:#dbe7ff,stroke:#2f5fd0,color:#10204a,stroke-width:1.5px
+  classDef decide fill:#fff1cc,stroke:#c98a00,color:#3d2a00
+  classDef act fill:#eef1f6,stroke:#7a8599,color:#1c2230
+  classDef safe fill:#d9f2e3,stroke:#1f8a50,color:#0d3a22
+  classDef err fill:#fde0de,stroke:#c43c32,color:#4a0f0b
+  classDef loop fill:#efe4ff,stroke:#7a4fd0,color:#2a1260
+  class start,endc,endu term
+  class resolve,ok,fallback,changed,save,alive,budget decide
+  class banner,spawn,read,switch,emit,wait,recycle act
+  class write safe
+  class exit2,exit3 err
+  class again1,again2,again3 loop
 ```
 
 **Source chain inside one read (ADR-0004)**
 
 ```mermaid
-flowchart LR
-  r[Read request] --> uia{UI Automation text pattern?}
+flowchart TD
+  r([Read request]) --> uia{UI Automation text available?}
   uia -- yes --> pw{Password field?}
-  pw -- yes --> skip[Skip element]
-  pw -- no --> txt[Return text, caret, focus]
+  pw -- yes --> skip[Skip that element]
+  pw -- no --> txt([Return text, caret, focus])
   uia -- no --> cap[Capture this window only]
   cap --> dirty{Frame changed since last OCR?}
-  dirty -- no --> last[Reuse last text]
   dirty -- yes --> ocr[Windows OCR, scaled to max size]
-  ocr --> drop[Release frame buffer] --> sim{Similarity under 0.99?}
-  sim -- yes --> txt2[Return new text]
-  sim -- no --> last
+  ocr --> drop[Release frame buffer]
+  drop --> sim{Text changed? similarity under 0.99}
+  sim -- yes --> txt2([Return new text])
+  sim -- no --> last([Reuse last text])
+  dirty -- no --> last
+  classDef term fill:#dbe7ff,stroke:#2f5fd0,color:#10204a,stroke-width:1.5px
+  classDef decide fill:#fff1cc,stroke:#c98a00,color:#3d2a00
+  classDef act fill:#eef1f6,stroke:#7a8599,color:#1c2230
+  classDef safe fill:#d9f2e3,stroke:#1f8a50,color:#0d3a22
+  classDef err fill:#fde0de,stroke:#c43c32,color:#4a0f0b
+  classDef loop fill:#efe4ff,stroke:#7a4fd0,color:#2a1260
+  class r,txt,txt2,last term
+  class uia,pw,dirty,sim decide
+  class cap,ocr act
+  class skip,drop safe
 ```
 
 **Processes and what crosses between them**
@@ -191,20 +222,25 @@ flowchart LR
 ```mermaid
 sequenceDiagram
   participant U as User / CLI
-  participant P as Parent (cli + supervisor)
+  participant P as Parent (CLI + supervisor)
   participant W as Worker (capture, UIA, OCR)
   participant OS as Windows APIs
   U->>P: watch --title "Notepad"
   P->>W: start(window handle, options)
+  rect rgba(219,231,255,0.45)
   loop every interval
     W->>OS: read text or capture frame
-    OS-->>W: text / pixels (pixels stay in the worker)
+    OS-->>W: text or pixels
+    Note over W: Pixels never leave the worker
     W-->>P: text event (text only)
     P-->>U: print line / JSONL
   end
+  end
+  rect rgba(255,241,204,0.55)
   P->>W: recycle when over budget
   W-->>P: exit
   P->>W: start again (same window)
+  end
   U->>P: Ctrl+C
   P->>W: stop
   P-->>U: end event
@@ -214,17 +250,28 @@ sequenceDiagram
 
 ```mermaid
 stateDiagram-v2
+  direction TB
   [*] --> Starting
-  Starting --> ReadingUIA: UIA works
-  Starting --> ReadingOCR: no UIA text
-  ReadingUIA --> ReadingOCR: 3 failed reads
-  ReadingOCR --> ReadingUIA: retry every 30 s succeeds
-  ReadingUIA --> Recycling: over budget
-  ReadingOCR --> Recycling: over budget
-  Recycling --> Starting
-  ReadingUIA --> Ended: window closed / Ctrl+C
-  ReadingOCR --> Ended: window closed / Ctrl+C
+  Starting --> Reading
+  state Reading {
+    direction LR
+    state "UI Automation" as UIA
+    state "OCR" as OCR
+    [*] --> UIA: UIA works
+    [*] --> OCR: no UIA text
+    UIA --> OCR: 3 failed reads
+    OCR --> UIA: retry every 30 s succeeds
+  }
+  Reading --> Recycling: over budget
+  Recycling --> Starting: worker restarted
+  Reading --> Ended: window closed or Ctrl+C
   Ended --> [*]
+  classDef term fill:#dbe7ff,stroke:#2f5fd0,color:#10204a,stroke-width:1.5px
+  classDef act fill:#eef1f6,stroke:#7a8599,color:#1c2230
+  classDef decide fill:#fff1cc,stroke:#c98a00,color:#3d2a00
+  class Starting,Ended term
+  class UIA,OCR act
+  class Recycling decide
 ```
 
 ## 6. Dependencies
