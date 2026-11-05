@@ -86,7 +86,7 @@ Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-p
 | RD-09 | The system shall redact text in the background as it changes, so redacted text is ready before a send is triggered (ADR-0013). | S |
 | RD-10 | The system shall redact only changed paragraphs, reusing cached results for unchanged ones. | S |
 | RD-11 | The redaction cache shall hold only redacted text keyed by an HMAC of the original, be stored in the encrypted per-file context store, and be discarded when the Redactor version, tier, patterns or allow-list change. | M |
-| RD-12 | When a context store entry has expired and saving is on, the system should refill the cache from saved text files, ignoring entries that fail their MAC check or ruleset match. | S |
+| RD-12 | When a context store entry is expired, missing, corrupted or unreadable and saving is on, the system should refill the cache from saved text files, ignoring entries that fail their MAC check or ruleset match. | S |
 
 ### 3.3 AI Router
 
