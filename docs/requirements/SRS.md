@@ -171,6 +171,8 @@ Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-p
 | NFR-11 | Portability | Platform-specific code shall live only in Screen Reader platform adapters and the app shell. | M |
 | NFR-12 | Maintainability | Each package shall have at least 80% line coverage on non-platform code. | S |
 | NFR-13 | Usability | A new user shall reach their first suggestion within 3 minutes of install. | S |
+| NFR-14 | Privacy | The context store, redaction cache, settings and logs shall be stored only in the local, non-roaming app data folder (ADR-0014). | M |
+| NFR-15 | Privacy | When the user picks a save folder inside a known sync or cloud folder, the system shall warn that files will leave the device and require confirmation. | M |
 
 ## 5. Constraints
 

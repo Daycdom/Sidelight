@@ -9,11 +9,12 @@
 
 ## 1. Principles
 
-1. **Local by default.** Nothing leaves the device except text the user sends to the AI backend they chose.
-2. **Minimum data.** Only one approved window is read; images are discarded right after text extraction.
-3. **Redact, show, then ask.** Everything is redacted before it is sent anywhere, the user sees what was redacted, and nothing is sent without their approval. Approval is on by default; the user decides when it's needed (ADR-0012).
-4. **User decides storage.** Saving is off unless the user turns it on.
-5. **No telemetry** in v1.
+1. **Privacy first.** Every design decision favors privacy over convenience or speed unless the user explicitly opts out of that specific protection.
+2. **Local by default.** Nothing leaves the device except text the user approves for the AI backend they chose. Sidelight's own data stays in the local, non-roaming app data folder and never syncs (ADR-0014).
+3. **Minimum data.** Only one approved window is read; images are discarded right after text extraction.
+4. **Redact, show, then ask.** Everything is redacted before it is sent anywhere, the user sees what was redacted, and nothing is sent without their approval. Approval is on by default; the user decides when it's needed (ADR-0012).
+5. **User decides storage.** Saving is off unless the user turns it on.
+6. **No telemetry** in v1.
 
 ## 2. Data inventory
 
@@ -24,7 +25,7 @@
 | Transcripts | Saving on | User folder | User setting | Nobody |
 | Redaction reports | Saving on | User folder | User setting | Nobody (contain types and counts only) |
 | Suggestion history | Saving on | User folder | User setting | Nobody |
-| Per-file context | While watching | Encrypted SQLite, app data folder | User setting, default 30 days | Chosen AI backend, redacted, as prompt context |
+| Per-file context | While watching | Encrypted SQLite, local (non-roaming) app data folder | User setting, default 30 days | Chosen AI backend, redacted, as prompt context |
 | Redaction cache | While watching | Encrypted context store; saved text files as backup only when saving is on | Context store retention (default 30 days); saving retention for the backup | Nobody (redacted text and HMAC keys only, no originals) |
 | Dictation audio | Push-to-talk held | Memory | Until transcribed | Nobody |
 | API keys | User enters them | OS credential store | Until removed | Their own provider only |

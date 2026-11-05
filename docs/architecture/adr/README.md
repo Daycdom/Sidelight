@@ -17,5 +17,6 @@ Decisions are recorded with [MADR](https://adr.github.io/madr/) (Markdown Archit
 | [0011](0011-agent-bridge-mcp.md) | Offer screen text to other AI agents through a local MCP server | Proposed | 2026-11-05 |
 | [0012](0012-approve-every-send.md) | Redact, show, then ask before anything is sent | Accepted | 2026-11-05 |
 | [0013](0013-redaction-cache.md) | Redact ahead of time and cache results in the context store | Accepted | 2026-11-05 |
+| [0014](0014-local-only-storage.md) | Keep Sidelight's own data on this machine only | Accepted | 2026-11-05 |
 
 New ADRs copy [template.md](template.md).
