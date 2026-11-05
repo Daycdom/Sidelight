@@ -77,6 +77,7 @@ flowchart TB
 | Voice | Read-aloud and dictation | OS voices (Windows SAPI / WinRT speech, macOS AVSpeechSynthesizer), faster-whisper |
 | Co-pilot | Orchestrate the loop and context | asyncio, SQLite with encryption (approach to be decided in an ADR: SQLCipher or app-level encryption with `cryptography`) |
 | common | Shared settings and output saving | platformdirs, keyring, cryptography |
+| Agent Bridge (proposed) | Read-only, redacted window text for other AI agents over MCP (ADR-0011) | `mcp` Python SDK, stdio transport |
 | Desktop app | UI and OS integration | pywebview; tray and global hotkeys through thin OS wrappers (pywin32/ctypes on Windows, PyObjC on macOS), avoiding LGPL libraries |
 
 ## 5. Runtime view: one suggestion

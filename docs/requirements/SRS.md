@@ -17,7 +17,7 @@ This document lists the testable requirements for every Sidelight component. The
 ### 1.2 Conventions
 
 - **Shall** = required for the stated release. **Should** = desired, may slip. **May** = optional.
-- Each requirement has an ID (`SR-` Screen Reader, `RD-` Redactor, `AR-` AI Router, `VO-` Voice, `CP-` Co-pilot, `UI-` Desktop app, `NFR-` non-functional, `CON-` constraint).
+- Each requirement has an ID (`SR-` Screen Reader, `RD-` Redactor, `AR-` AI Router, `VO-` Voice, `CP-` Co-pilot, `UI-` Desktop app, `AG-` Agent Bridge, `NFR-` non-functional, `CON-` constraint).
 - Priority: **M** must, **S** should, **C** could (MoSCoW).
 - Requirement IDs never change once published; removed requirements are marked *Withdrawn*.
 
@@ -35,7 +35,7 @@ This document lists the testable requirements for every Sidelight component. The
 
 ### 2.1 Product perspective
 
-Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-pilot and the shared `common`) and one closed-source desktop app. See [Architecture](../architecture/architecture.md).
+Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-pilot and the shared `common`), a proposed seventh (Agent Bridge, ADR-0011), and one closed-source desktop app. See [Architecture](../architecture/architecture.md).
 
 ### 2.2 Operating environment
 
@@ -134,6 +134,18 @@ Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-p
 | UI-06 | All UI-to-Python calls shall go through one API module (`ui/src/api.ts`). | M |
 | UI-07 | The app shall show a first-run privacy explanation before any capture. | M |
 
+### 3.7 Agent Bridge (proposed, ADR-0011)
+
+| ID | Requirement | Priority |
+| --- | --- | --- |
+| AG-01 | The system shall expose the approved window's text to other AI agents as a local MCP server over stdio. | S |
+| AG-02 | The system shall offer read-only tools and resources only; no tool shall act on the user's machine. | M |
+| AG-03 | The system shall let only the user choose the window; agents shall not list or switch windows. | M |
+| AG-04 | The system shall pass every result through the Redactor, with no option to turn it off. | M |
+| AG-05 | The system shall mark results as untrusted screen content. | M |
+| AG-06 | The system shall show the capture indicator while an agent is connected and log each read without content. | M |
+| AG-07 | The system shall enforce a per-minute read limit and offer an "ask before each read" mode. | S |
+
 ## 4. Non-functional requirements
 
 | ID | Category | Requirement | Priority |
@@ -178,3 +190,4 @@ Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-p
 | US-13 | CP-07 |
 | US-14 | CP-02 |
 | US-15 | SR-11, RD-05, AR-08 |
+| US-16 | AG-01 to AG-07 |

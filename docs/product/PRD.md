@@ -22,6 +22,7 @@ It is built as standalone sub-projects. Each is useful on its own:
 | Voice | Local read-aloud and push-to-talk dictation |
 | Co-pilot | Combines the above into live suggestions |
 | Desktop app | Graphical interface over the Co-pilot |
+| Agent Bridge (proposed) | Gives other AI agents (Hermes Agent, Claude, Cursor and others) read-only, redacted text from the approved window over MCP |
 
 ## 2. Problem
 
@@ -70,6 +71,7 @@ People working in documents, code editors and browsers want help in context with
 | US-13 | user | set different behavior per app | my code editor and word processor each get the right help |
 | US-14 | user | block apps entirely (e.g. password managers) | they are never captured |
 | US-15 | CLI user | run each sub-project from the command line | I can script and automate it |
+| US-16 | agent user | let the AI agent I already use read my approved window, redacted | it can help with what I'm working on without me copying text |
 
 ## 7. Requirements summary
 

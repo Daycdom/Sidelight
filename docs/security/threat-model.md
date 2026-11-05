@@ -67,6 +67,8 @@ flowchart LR
 | T-14 | Information disclosure | Dictation audio leaves the device | Local speech-to-text only | VO-03 |
 | T-15 | Information disclosure | Password fields read through the accessibility API | Skip elements marked as password fields | SR-13 |
 | T-16 | Tampering | Tampered ML model downloaded for Redactor or Voice | Downloads only when the user starts them; pinned model versions and checksums | NFR-04, NFR-08 |
+| T-17 | Information disclosure | An agent connected through the bridge sends screen text somewhere the user didn't expect | Always redacted; user approves the window; read-only; indicator and read log; docs state the bridge is the privacy boundary | AG-03, AG-04, AG-06 |
+| T-18 | Tampering | Screen text injects instructions into a connected agent that has its own tools | Results marked as untrusted content; read-only bridge; warn in setup docs | AG-02, AG-05 |
 
 ## 5. Residual risks
 

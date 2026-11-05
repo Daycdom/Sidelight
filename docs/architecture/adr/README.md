@@ -14,5 +14,6 @@ Decisions are recorded with [MADR](https://adr.github.io/madr/) (Markdown Archit
 | [0008](0008-opt-in-output-storage.md) | Output files are opt-in | Accepted | 2026-11-04 |
 | [0009](0009-text-only-ai-input-v1.md) | Text-only AI input for v1 | Accepted | 2026-11-04 |
 | [0010](0010-change-detection-on-text.md) | Detect changes on text, not pixels | Accepted | 2026-11-04 |
+| [0011](0011-agent-bridge-mcp.md) | Offer screen text to other AI agents through a local MCP server | Proposed | 2026-11-05 |
 
 New ADRs copy [template.md](template.md).
