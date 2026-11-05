@@ -52,7 +52,7 @@ flowchart LR
 | ID | Category | Threat | Mitigation | Req |
 | --- | --- | --- | --- | --- |
 | T-01 | Information disclosure | Overlapping windows (chats, notifications) get captured | Window-scoped capture APIs only | SR-03 |
-| T-02 | Information disclosure | Secrets or personal data sent to a cloud provider | Redactor before every cloud call; app blocklist; local backend option | CP-01, CP-02 |
+| T-02 | Information disclosure | Secrets or personal data sent to a cloud provider | Redactor before every send; redaction summary and user approval before sending (on by default); app blocklist; local backend option | CP-01, CP-02, CP-11 to CP-13 |
 | T-03 | Information disclosure | Screenshots written to disk or leaked from memory | Frames stay in a child process, never written; buffers released right after OCR (Python cannot guarantee memory is zeroed) | SR-07 |
 | T-04 | Information disclosure | Saved output or context read by another user or malware | Off by default; optional encryption; app data folder permissions | NFR-06 |
 | T-05 | Spoofing / tampering | Another local process connects to the backend | No API port: pywebview in-process bridge; bundled UI loaded without the localhost file server, or with its `ssl` option | ADR-0002 |

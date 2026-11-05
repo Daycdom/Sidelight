@@ -27,7 +27,7 @@ Rules:
 - **Local transport only.** stdio (the agent launches the bridge as a child process). No network port in v0.1 (NFR-04).
 - **Visible.** The capture indicator shows while an agent is connected, and the bridge logs each read (time, tool, character count, never content).
 - **Untrusted content.** Results are marked as untrusted screen content, so agents treat them as data (T-06).
-- **Limits.** A per-minute read limit, and an optional "ask me before each read" mode.
+- **Approval.** Each read needs the user's approval by default, with the redaction summary shown, following ADR-0012. A per-minute read limit applies too.
 
 ## Consequences
 

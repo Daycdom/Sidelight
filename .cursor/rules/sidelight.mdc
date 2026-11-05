@@ -10,6 +10,7 @@ Follow the full guide in @AGENTS.md. The rules that must never be broken:
 - Never put screen text, API keys or personal data in logs, files or test fixtures.
 - Output files only when the user enabled saving.
 - v1 sends text only to AI backends, never images.
+- Every send: redact first, show the user what was redacted, and wait for approval unless they relaxed it (ADR-0012). No send path may skip this.
 - Platform code only in `packages/reader/src/sidelight_reader/platform/<os>/`, imported lazily.
 - No GPL or LGPL dependencies without asking. Use `uv`, never `pip install`.
 - Conventional Commits with package scope; no AI attribution lines in commits.

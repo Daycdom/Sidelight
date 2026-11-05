@@ -19,7 +19,7 @@ The free desktop app (closed source) is built on these packages.
 
 ## Privacy in one paragraph
 
-Only the one window you approve is read. Images are discarded right after text extraction. Text is redacted before any cloud call and only goes to the backend you chose. Nothing is saved unless you turn saving on. No telemetry. Details: [privacy](docs/security/privacy.md), [threat model](docs/security/threat-model.md).
+Only the one window you approve is read. Images are discarded right after text extraction. Text is redacted before it goes anywhere, you're shown what was redacted, and nothing is sent until you approve it (on by default; you choose when to be asked). It only goes to the backend you chose. Nothing is saved unless you turn saving on. No telemetry. Details: [privacy](docs/security/privacy.md), [threat model](docs/security/threat-model.md).
 
 ## Getting started
 

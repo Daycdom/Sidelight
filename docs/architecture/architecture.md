@@ -40,8 +40,8 @@ flowchart LR
   suite -- suggestions, read-aloud --> user
   suite -- reads text via --> os
   os -- text / frames of --> target
-  suite -- redacted text over HTTPS --> cloud
-  suite -- redacted or raw text, user's choice --> lab
+  suite -- redacted text after approval, HTTPS --> cloud
+  suite -- redacted text, after approval --> lab
 ```
 
 ## 4. Containers (C4 level 2)
@@ -96,6 +96,8 @@ sequenceDiagram
   CP->>CP: trigger check (pause, N words, hotkey, rate limit)
   CP->>RD: redact(text)
   RD-->>CP: redacted text
+  CP-->>UI: redaction summary + outgoing text
+  UI-->>CP: approve / edit / deny (unless the user relaxed approval)
   CP->>AR: ask(prompt + context + redacted text)
   AR-->>CP: streamed suggestion
   CP-->>UI: suggestion event

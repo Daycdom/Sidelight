@@ -10,7 +10,7 @@ Sending screenshots to vision models costs far more per call and exposes everyth
 
 ## Decision
 
-v1 sends only text to AI backends, redacted before any cloud call (ADR-0007). Image input may be added later as an explicit opt-in.
+v1 sends only text to AI backends, redacted and approved before sending (ADR-0012). Image input may be added later as an explicit opt-in.
 
 ## Consequences
 

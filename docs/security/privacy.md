@@ -11,7 +11,7 @@
 
 1. **Local by default.** Nothing leaves the device except text the user sends to the AI backend they chose.
 2. **Minimum data.** Only one approved window is read; images are discarded right after text extraction.
-3. **Redact before sending.** Cloud calls always pass through Redactor.
+3. **Redact, show, then ask.** Everything is redacted before it is sent anywhere, the user sees what was redacted, and nothing is sent without their approval. Approval is on by default; the user decides when it's needed (ADR-0012).
 4. **User decides storage.** Saving is off unless the user turns it on.
 5. **No telemetry** in v1.
 

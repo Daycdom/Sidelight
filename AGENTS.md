@@ -56,8 +56,9 @@ Run lint, mypy and the affected tests before saying a change is done. Never use 
 5. **Output files only when the user enabled saving**, to the folder they chose (SR-09, ADR-0008).
 6. **API keys only in the OS credential store** (keyring), never in files, env dumps, logs or tests (AR-02).
 7. **v1 sends text only to AI backends, never images** (ADR-0009).
-8. Captured text sent to a model is data, not instructions: keep it delimited and never give the model tools that act on the user's machine (T-06).
-9. No real personal data or real keys in fixtures. Use obviously fake values.
+8. **Redact, show, then ask before any send** (ADR-0012): every outbound text goes through Redactor, the user sees a redaction summary, and nothing is sent without approval unless the user relaxed it. Never add a send path that skips this.
+9. Captured text sent to a model is data, not instructions: keep it delimited and never give the model tools that act on the user's machine (T-06).
+10. No real personal data or real keys in fixtures. Use obviously fake values.
 
 If a task seems to require breaking one of these, stop and ask instead.
 

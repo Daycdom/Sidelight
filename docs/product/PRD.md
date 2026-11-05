@@ -63,7 +63,7 @@ People working in documents, code editors and browsers want help in context with
 | US-05 | student | get suggestions as I write more | I improve the draft while working |
 | US-06 | developer | see likely bugs before running my code | I catch simple mistakes early |
 | US-07 | developer | ask for a runtime analysis of a function by hotkey | I get deeper help on demand |
-| US-08 | user | have secrets and personal data masked before any cloud call | private information never leaves my PC |
+| US-08 | user | have secrets and personal data masked, see what was masked, and approve before anything is sent | private information never leaves my PC without my say |
 | US-09 | user | choose whether captured text and suggestions are saved, where, and for how long | I control what stays on disk |
 | US-10 | user | have the assistant remember context per file | suggestions build on earlier work in that file only |
 | US-11 | accessibility user | have text or suggestions read aloud | I can work without reading the screen |
@@ -79,7 +79,7 @@ Detailed, testable requirements live in the [SRS](../requirements/SRS.md). Headl
 
 - Window-scoped capture with explicit OS consent.
 - Text from accessibility APIs first, native OCR second, Tesseract last; all local.
-- Local redaction before any network call.
+- Local redaction before anything is sent, a summary of what was redacted, and user approval before every send (on by default, user-adjustable).
 - Opt-in, user-located, retention-limited output storage.
 - Per-app profiles, user prompts and suggestion frequency controls.
 - Windows first, macOS second.

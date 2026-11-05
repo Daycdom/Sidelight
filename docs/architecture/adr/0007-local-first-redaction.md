@@ -11,7 +11,7 @@ Screen text can contain passwords, personal data and secrets. Security is the pr
 ## Decision
 
 - Everything runs on-device except AI Router calls to the backend the user chose and an opt-in update check.
-- Co-pilot always passes text through Redactor before a cloud backend. For self-hosted or on-device backends, redaction is on by default and may be turned off by the user.
+- Co-pilot always passes text through Redactor before any backend. (Originally local backends could turn redaction off; ADR-0012 removed that option and added user approval before every send.)
 - Users can block apps from capture entirely.
 - No telemetry in v1.
 

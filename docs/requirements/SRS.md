@@ -111,7 +111,7 @@ Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-p
 
 | ID | Requirement | Priority |
 | --- | --- | --- |
-| CP-01 | The system shall pass captured text through the Redactor before any cloud backend call. | M |
+| CP-01 | The system shall pass captured text through the Redactor before any backend call, cloud or local (ADR-0012). | M |
 | CP-02 | The system shall never capture apps on the user's blocklist. | M |
 | CP-03 | The system shall support triggers: manual hotkey, typing pause, every N words, fixed interval. | M |
 | CP-04 | The system shall use the user's custom prompt when given, otherwise build one from app type and recent text. | M |
@@ -121,6 +121,9 @@ Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-p
 | CP-08 | The system shall support "when / then" rules (e.g. on save, check for bugs). | C |
 | CP-09 | The system shall treat captured text as data in prompts, never as instructions. | M |
 | CP-10 | The system shall save suggestion history only when saving is enabled. | M |
+| CP-11 | The system shall not send any text to any destination until the user approves it. Approval shall be required by default. | M |
+| CP-12 | The system shall let the user choose, per profile and destination, when approval is needed: every send (default), once per session, only when something was redacted, or never. | M |
+| CP-13 | Before approval, the system shall show the user a summary of what was redacted (types and counts) and the outgoing text with placeholders highlighted, and let them edit it or allow-list a term. | M |
 
 ### 3.6 Desktop app
 
@@ -133,6 +136,7 @@ Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-p
 | UI-05 | The app shall let the user customize accent color, theme, text size and panel opacity. | S |
 | UI-06 | All UI-to-Python calls shall go through one API module (`ui/src/api.ts`). | M |
 | UI-07 | The app shall show a first-run privacy explanation before any capture. | M |
+| UI-08 | The app shall show an approval card in the suggestions panel for each pending send, with the redaction summary and Approve, Edit and Deny actions. | M |
 
 ### 3.7 Agent Bridge (proposed, ADR-0011)
 
@@ -144,7 +148,7 @@ Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-p
 | AG-04 | The system shall pass every result through the Redactor, with no option to turn it off. | M |
 | AG-05 | The system shall mark results as untrusted screen content. | M |
 | AG-06 | The system shall show the capture indicator while an agent is connected and log each read without content. | M |
-| AG-07 | The system shall enforce a per-minute read limit and offer an "ask before each read" mode. | S |
+| AG-07 | The system shall enforce a per-minute read limit and require the user's approval for each read by default, with the redaction summary shown (ADR-0012). | M |
 
 ## 4. Non-functional requirements
 
@@ -183,7 +187,7 @@ Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-p
 | US-04 | CP-03, AR-03, AR-04 |
 | US-05, US-06 | CP-03, CP-04, CP-05 |
 | US-07 | CP-03, CP-08 |
-| US-08 | RD-01 to RD-04, CP-01 |
+| US-08 | RD-01 to RD-04, CP-01, CP-11 to CP-13, UI-08 |
 | US-09 | SR-09, SR-10, VO-05, CP-10, NFR-06 |
 | US-10 | CP-05, CP-06 |
 | US-11, US-12 | VO-01 to VO-04 |

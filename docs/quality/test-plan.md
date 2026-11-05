@@ -30,9 +30,11 @@ Show that each release meets its SRS requirements, keeps the privacy promise, an
 | PT-01 | Network monitor shows no traffic except the configured backend during a session | NFR-04 |
 | PT-02 | No image files are created anywhere during a session | SR-07 |
 | PT-03 | With saving off, no transcript, report or history files exist after a session | SR-09, CP-10 |
-| PT-04 | Planted fake API keys and cards never appear in cloud request payloads | CP-01 |
+| PT-04 | Planted fake API keys and cards never appear in any request payload, cloud or local | CP-01 |
 | PT-05 | Blocklisted app produces no capture events | CP-02 |
 | PT-06 | Logs at default level contain no screen text | Threat T-13 |
+| PT-07 | With default settings, no request reaches any backend or agent until the user approves it; denying sends nothing | CP-11 |
+| PT-08 | The approval prompt lists every redaction made in the outgoing text | CP-13 |
 
 ## 4. Performance tests
 
