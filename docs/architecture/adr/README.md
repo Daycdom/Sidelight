@@ -16,6 +16,6 @@ Decisions are recorded with [MADR](https://adr.github.io/madr/) (Markdown Archit
 | [0010](0010-change-detection-on-text.md) | Detect changes on text, not pixels | Accepted | 2026-11-04 |
 | [0011](0011-agent-bridge-mcp.md) | Offer screen text to other AI agents through a local MCP server | Proposed | 2026-11-05 |
 | [0012](0012-approve-every-send.md) | Redact, show, then ask before anything is sent | Accepted | 2026-11-05 |
-| [0013](0013-redaction-cache.md) | Redact ahead of time and reuse saved text files as the redaction cache | Accepted | 2026-11-05 |
+| [0013](0013-redaction-cache.md) | Redact ahead of time and cache results in the context store | Accepted | 2026-11-05 |
 
 New ADRs copy [template.md](template.md).

@@ -25,7 +25,7 @@
 | Redaction reports | Saving on | User folder | User setting | Nobody (contain types and counts only) |
 | Suggestion history | Saving on | User folder | User setting | Nobody |
 | Per-file context | While watching | Encrypted SQLite, app data folder | User setting, default 30 days | Chosen AI backend, redacted, as prompt context |
-| Redaction cache | While watching | Memory; inside saved text files only when saving is on | Session, or the saving retention setting | Nobody (redacted text and HMAC keys only, no originals) |
+| Redaction cache | While watching | Encrypted context store; saved text files as backup only when saving is on | Context store retention (default 30 days); saving retention for the backup | Nobody (redacted text and HMAC keys only, no originals) |
 | Dictation audio | Push-to-talk held | Memory | Until transcribed | Nobody |
 | API keys | User enters them | OS credential store | Until removed | Their own provider only |
 | Settings and profiles | Always | App data folder | Until uninstall | Nobody |
