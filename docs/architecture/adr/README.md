@@ -18,5 +18,7 @@ Decisions are recorded with [MADR](https://adr.github.io/madr/) (Markdown Archit
 | [0012](0012-approve-every-send.md) | Redact, show, then ask before anything is sent | Accepted | 2026-11-05 |
 | [0013](0013-redaction-cache.md) | Redact ahead of time and cache results in the context store | Accepted | 2026-11-05 |
 | [0014](0014-local-only-storage.md) | Keep Sidelight's own data on this machine only | Accepted | 2026-11-05 |
+| [0015](0015-storage-size.md) | Keep storage small and deletions real | Accepted | 2026-11-05 |
+| [0016](0016-memory-management.md) | Contain and catch memory leaks | Accepted | 2026-11-05 |
 
 New ADRs copy [template.md](template.md).

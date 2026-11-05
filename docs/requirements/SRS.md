@@ -173,6 +173,12 @@ Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-p
 | NFR-13 | Usability | A new user shall reach their first suggestion within 3 minutes of install. | S |
 | NFR-14 | Privacy | The context store, redaction cache, settings and logs shall be stored only in the local, non-roaming app data folder (ADR-0014). | M |
 | NFR-15 | Privacy | When the user picks a save folder inside a known sync or cloud folder, the system shall warn that files will leave the device and require confirmation. | M |
+| NFR-16 | Storage | ML models shall default to the smallest version meeting accuracy targets; larger models shall be optional downloads the user can remove (ADR-0015). | M |
+| NFR-17 | Storage | Saved transcripts shall store changed paragraphs only, compressed before encryption; logs shall rotate with a hard size cap. | S |
+| NFR-18 | Privacy | SQLite stores shall use secure delete and auto-vacuum; settings shall show storage use per category with clear buttons. | M |
+| NFR-19 | Reliability | Capture, OCR, Redactor ML and Voice models shall run in worker processes with an OS-enforced memory cap where available (Windows Job Objects), recycled by the supervisor after a work limit or memory budget (ADR-0016). | M |
+| NFR-20 | Reliability | Every queue, buffer, cache and history shall have a maximum size. | M |
+| NFR-21 | Reliability | Memory of the main process shall not grow more than 50 MB over 8 hours of watching a changing window on the reference PC (proposed target). | S |
 
 ## 5. Constraints
 

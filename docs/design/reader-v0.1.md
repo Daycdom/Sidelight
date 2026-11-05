@@ -129,6 +129,8 @@ If the current source fails three reads in a row, fall back to the next one and 
 
 `watch` runs the capture loop in a child process (`multiprocessing`, spawn start method). Only events (text, never pixels) cross the pipe. If the child dies, the parent emits `end` with `reason: "error"` and a short non-content error message. `read` and `sources` can run in-process.
 
+The parent recycles the worker (ADR-0016) after 10,000 frames, 4 hours, or when its memory passes 400 MB (all configurable, proposed defaults), picking up on the same window with a `status` event of `worker-restarted`. Inside the worker, every COM and WinRT object is released in a `finally` block or context manager, frame pools are recreated on resize, and queues are bounded.
+
 ### 5.4 Privacy rules this package enforces
 
 | Rule | How | Test |

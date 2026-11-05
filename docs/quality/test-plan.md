@@ -43,6 +43,8 @@ Show that each release meets its SRS requirements, keeps the privacy promise, an
 | PF-01 | CPU while watching a static window for 10 minutes | Under 3% | NFR-01 |
 | PF-02 | Accessibility text change to event | Under 500 ms | NFR-03 |
 | PF-03 | Redactor on 2,000 characters | Under 200 ms | RD-08 |
+| PF-04 | Soak: watch a changing window for 1 hour (CI or nightly) and 8 hours (before release); record memory every 30 s | Growth within NFR-21; workers recycle cleanly | NFR-19, NFR-21 |
+| PF-05 | Repeat 1,000 reads per text source under `tracemalloc` | No steady growth in Python memory | NFR-20 |
 
 ## 5. Compatibility matrix (v1.0)
 
