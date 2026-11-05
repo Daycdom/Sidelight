@@ -83,6 +83,9 @@ Six open-source Python packages (Screen Reader, Redactor, AI Router, Voice, Co-p
 | RD-06 | The system shall optionally write a report of entity types and counts masked, never the original values. | S |
 | RD-07 | The system shall allow user-defined custom patterns and allow-lists. | S |
 | RD-08 | The system shall process 2,000 characters in under 200 ms on the reference PC (see NFR-02). | S |
+| RD-09 | The system shall redact text in the background as it changes, so redacted text is ready before a send is triggered (ADR-0013). | S |
+| RD-10 | The system shall redact only changed paragraphs, reusing cached results for unchanged ones. | S |
+| RD-11 | The redaction cache shall hold only redacted text keyed by an HMAC of the original, live in memory when saving is off, persist in the saved text files when saving is on, and be discarded when the Redactor version, tier, patterns or allow-list change. | M |
 
 ### 3.3 AI Router
 
