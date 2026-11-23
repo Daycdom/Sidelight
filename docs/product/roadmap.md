@@ -22,6 +22,22 @@ Build each part on its own first, release it, then combine them (decided 2026-11
 | 6 Desktop UI | Full app (Sidelight Desk) on the shared shell: settings, profiles, suggestion panel with approval cards, tray, hotkeys | Beta |
 | 7 Windows release | Signed installer, auto-update, first-run privacy screen, sandboxed workers (ADR-0017) | **Windows app 1.0** |
 | 8 macOS port | ScreenCaptureKit, Accessibility API, Vision OCR, App Sandbox entitlements, notarization | **macOS 1.0** |
-| 9 Later | Agent Bridge for other AI agents (ADR-0011, not a priority), built-in on-device model, Linux, opt-in image input, game suggestions, enterprise tier | — |
+| 9 Later | Agent Bridge for other AI agents (ADR-0011, not a priority), built-in on-device model, Linux, opt-in image input, game suggestions, enterprise tier, "Make me a prompt" button (builds a draft prompt from the collected context; the user edits it, then it goes through redact, show and approve before sending to the AI they choose, ADR-0012) | — |
 
 Each part's phase ends with a standalone release: its own CLI, tests, docs and changelog, usable without the others. Where a UI makes sense (Redactor next, later Voice and Router), a small standalone app can follow its CLI, reusing the shell from phase 1b.
+
+## Website track (runs alongside)
+
+The product website, customer accounts and license delivery are built in small steps slotted between the main phases, so work can start early without blocking the parts.
+
+**API first, UI last.** Like the packages, each step is a standalone piece with its own API contract (OpenAPI), tests and a small command-line client, usable without any web pages. The website and account UI come last and are just another client of those APIs, so they can be built or replaced without touching the services.
+
+| Step | Slot | Scope |
+| --- | --- | --- |
+| W0 Accounts and domain hardening | After phase 0 | Hardware-key 2FA on GitHub, PyPI, Cloudflare, registrar and email; registrar lock, DNSSEC, DMARC `p=reject` |
+| W1 Plain download page | Between 1 and 1b | Minimal static page on GitHub Pages (sidelight.friendzone.dev) with the Reader download, checksums and a privacy note. No design work; replaced by the final site in W5 |
+| W2 Service design | Between 2 and 3 | Database schema, OpenAPI contract (accounts, licenses, devices, the one activation/update endpoint), threat model section, ADR, hosting choice |
+| W3 Accounts service | Between 3 and 4 | Headless accounts API: passkey and email-link sign-in, sessions, account deletion and export, with a dev CLI client and tests; staging only |
+| W4 Licensing and payments service | Between 4 and 5 | Headless licensing API: Merchant of Record sandbox, signed webhooks, license signing and download, activation/update endpoint, devices; dev CLI client and tests; staging only |
+| W5 Website and account UI | With phase 6 | Product pages and account pages built on the W3 and W4 APIs, sharing the design system with the desktop app UI |
+| W6 Launch | With phase 7 | Production setup, legal pages (privacy, terms, refunds), monitoring, backups, external security review |
